@@ -1,1 +1,17 @@
 http://localhost:5230
+
+{
+    "nomContinent" : "Europe",
+    "Pays_" :
+        [ {
+            "nomPays" : "Brésil",
+            "Population_" : [
+                {
+                    "Pays_" : "Brésil",
+                    "Annee" : 2023,
+                    "Valeur" : 124632795
+                }
+            ]
+        }
+    ]
+}

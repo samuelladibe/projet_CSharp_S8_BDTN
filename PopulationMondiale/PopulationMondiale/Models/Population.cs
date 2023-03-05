@@ -1,10 +1,15 @@
-﻿namespace PopulationMondiale.Models
+﻿using Microsoft.Build.Framework;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PopulationMondiale.Models
 {
     public class Population
     {
         public int Id { get; set; }
-        public Pays Pays_ { get; set; }
-        public int Annee { get; set; }
-        public double Valeur { get; set; }
+        [Required]  public int Annee { get; set; }
+        [Required]  public double Valeur { get; set; }
+
+        [ForeignKey("Pays")][Required]
+        public int PaysId { get; set; }  
     }
 }

@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PopulationMondiale",
+    "\\PopulationMondiale\\PopulationMondiale",
+    "\\PopulationMondiale\\PopulationMondiale\\Models"
   ],
+  "SelectedNode": "\\PopulationMondiale\\PopulationMondiale\\Models\\SeedData.cs",
   "PreviewInSolutionExplorer": false
 }

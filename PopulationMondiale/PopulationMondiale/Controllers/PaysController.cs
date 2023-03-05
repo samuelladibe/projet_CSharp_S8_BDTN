@@ -25,7 +25,7 @@ namespace PopulationMondiale.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pays>>> GetPays()
         {
-            return await _context.Pays.ToListAsync();
+            return await _context.Pays.Include("Population_").ToListAsync();
         }
 
         // GET: api/Pays/5

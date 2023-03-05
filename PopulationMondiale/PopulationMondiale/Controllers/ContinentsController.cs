@@ -25,7 +25,7 @@ namespace PopulationMondiale.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Continent>>> GetContinent()
         {
-            return await _context.Continent.ToListAsync();
+            return await _context.Continent.Include("Pays_.Population_").ToListAsync();
         }
 
         // GET: api/Continents/5

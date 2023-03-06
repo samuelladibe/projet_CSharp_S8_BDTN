@@ -100,6 +100,21 @@ namespace PopulationMondiale.Controllers
             return NoContent();
         }
 
+        // Get the population of a continent for a given year: api/Continents/{continentName}/{year}
+        [HttpGet("{continentName}/{year}")]
+        public ActionResult<long> GetPopulationData(string continentName, int year)
+        {
+            var continent = _context.Continent.Include(c => c.Pays_).ThenInclude(country => country.Population_).SingleOrDefault(c => c.NomContinent == continentName);
+            
+            if (continent == null)
+            {
+                return NotFound();
+            }
+            var population = continent.Pays_.SelectMany(p => p.Population_).Where(p => p.Annee == year).Sum(p => p.Valeur);
+
+            return Ok(population);
+        }
+
         private bool ContinentExists(int id)
         {
             return _context.Continent.Any(e => e.Id == id);

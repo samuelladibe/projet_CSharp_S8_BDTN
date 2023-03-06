@@ -35,7 +35,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: dotnet-app
+        working-directory: PopulationMondiale
 
     steps:
       - uses: actions/checkout@v3

@@ -5,7 +5,7 @@ using PopulationMondiale.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<PopulationMondialeContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("PopulationMondialeContext") ?? throw new InvalidOperationException("Connection string 'PopulationMondialeContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING") ?? throw new InvalidOperationException("Connection string 'AZURE_SQL_CONNECTIONSTRING' not found.")));
 
 // Add services to the container.
 

@@ -4,14 +4,18 @@
 name: Build and deploy ASP.Net Core app to Azure Web App - smlad-eltgy-worldpopulation2023-api
 
 on:
-  push:
-    branches:
-      - main
+  #push:
+    #branches:
+      #- main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: PopulationMondiale
 
     steps:
       - uses: actions/checkout@v2

@@ -28,7 +28,7 @@ namespace PopulationMondiale
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<MyDatabaseContext>(options =>
+            services.AddDbContext<PopulationMondialeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
         }
 

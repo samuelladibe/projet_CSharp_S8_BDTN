@@ -32,9 +32,9 @@ namespace PopulationMondiale
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOData();
+            /*services.AddOData();
             services.AddControllersWithViews();
-            services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));
+            services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));*/
             services.AddDbContext<PopulationMondialeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
              services.AddSwaggerGen(c =>

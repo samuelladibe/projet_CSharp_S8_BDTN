@@ -72,8 +72,10 @@ namespace PopulationMondiale
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Todos}/{action=Index}/{id?}");
+                name: "Continents",
+                pattern: "continents",
+                defaults: new { controller = "Continents", action = "GetAllContinents" });
+
             });
             app.UseSwagger();
             app.UseSwaggerUI(c =>

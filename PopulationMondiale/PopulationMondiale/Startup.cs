@@ -31,6 +31,11 @@ namespace PopulationMondiale
             services.AddControllersWithViews();
             services.AddDbContext<PopulationMondialeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
+            services.AddSwaggerGen(c =>
+                    {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PopulationMondiale", Version = "v1" });
+        });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +64,11 @@ namespace PopulationMondiale
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Todos}/{action=Index}/{id?}");
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PopulationMondiale V1");
             });
         }
     }

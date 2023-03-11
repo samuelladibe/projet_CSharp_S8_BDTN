@@ -27,6 +27,8 @@ env:
 on:
   push:
     branches: [ "main" ]
+  merge:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:

@@ -34,6 +34,7 @@ namespace PopulationMondiale
         {
             services.AddOData();
             services.AddControllersWithViews();
+            services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));
             services.AddDbContext<PopulationMondialeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
              services.AddSwaggerGen(c =>
@@ -62,11 +63,11 @@ namespace PopulationMondiale
             app.UseRouting();
 
             app.UseAuthorization();
-            app.UseMvc(routeBuilder =>
+            /*app.UseMvc(routeBuilder =>
             {
                 routeBuilder.EnableDependencyInjection();
                 routeBuilder.Expand().Select().OrderBy().Filter();
-            });
+            });*/
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -57,19 +57,19 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/PopulationMondiale
         
       - name: dotnet install ef
         run: dotnet tool install -g dotnet-ef
 
       - name: dotnet bundle migration
-        run: dotnet ef migrations bundle -p PopulationMondiale/PopulationMondiale.csproj -o ${{env.DOTNET_ROOT}}/myapp/migrate
+        run: dotnet ef migrations bundle -p PopulationMondiale/PopulationMondiale.csproj -o ${{env.DOTNET_ROOT}}/PopulationMondiale/migrate
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{env.DOTNET_ROOT}}/PopulationMondiale
 
   deploy:
     runs-on: ubuntu-latest

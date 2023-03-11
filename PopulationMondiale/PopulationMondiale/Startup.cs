@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore;
 using Microsoft.AspNetCore.OData.Extensions;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using PopulationMondiale.Data;
 using PopulationMondiale.Models;
 
@@ -77,8 +78,9 @@ namespace PopulationMondiale
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PopulationMondiale API v1");
-                c.RoutePrefix = string.Empty;
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = "swagger/ui";
+                c.DocExpansion(DocExpansion.List);
             });
         }
     }

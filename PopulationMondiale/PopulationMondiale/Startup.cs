@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.OData;
+using Swashbuckle.AspNetCore;
 using PopulationMondiale.Data;
 using PopulationMondiale.Models;
 
@@ -32,11 +34,10 @@ namespace PopulationMondiale
             services.AddControllersWithViews();
             services.AddDbContext<PopulationMondialeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
-            services.AddSwaggerGen(c =>
-                    {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PopulationMondiale", Version = "v1" });
-        });
-
+             services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PopulationMondiale API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +70,8 @@ namespace PopulationMondiale
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PopulationMondiale V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PopulationMondiale API v1");
+                c.RoutePrefix = string.Empty;
             });
         }
     }

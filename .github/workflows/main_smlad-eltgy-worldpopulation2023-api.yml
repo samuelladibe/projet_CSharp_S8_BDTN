@@ -89,5 +89,5 @@ jobs:
         with:
           app-name: 'smlad-eltgy-worldpopulation2023-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_954677635B1E4047A0AA9F2E914D9028 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_51F54122AB1F4980B58B98882E785308 }}
           package: .

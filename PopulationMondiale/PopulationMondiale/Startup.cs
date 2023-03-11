@@ -14,7 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore;
-using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNetCore.OData.Extensions;
 using PopulationMondiale.Data;
 using PopulationMondiale.Models;
 

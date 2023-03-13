@@ -1,4 +1,5 @@
 http://localhost:5230
+https://populationmondialeapi.azure-api.net/smlad-eltgy-worldpopulation2023-api.azurewebsites.net/api/Continents?subscription-key=daf697d5de9c44d18398c3cc2e41c020
 
 {
     "nomContinent" : "Europe",

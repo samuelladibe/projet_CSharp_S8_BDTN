@@ -74,6 +74,15 @@ jobs:
         with:
           name: coverage-report
           path: ${{ github.workspace }}/Tests/coveragereport
+          
+      - name: Download and extract coverage report
+        uses: actions/download-artifact@v2
+        with:
+          name: coverage-report
+          run: |
+            mkdir -p coverage-report
+            tar xf ${{ github.workspace }}/*.zip -C coverage-report/
+
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp

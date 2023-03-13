@@ -66,30 +66,12 @@ jobs:
       - name: Run the unit tests with code coverage
         run: dotnet coverage collect dotnet test --output ${{ github.workspace }}/Tests/Coverage --output-format cobertura
 
-      - name: Generate Report
+      - name: Build and test with code coverage
         run: |
-          dotnet reportgenerator -reports:${{ github.workspace }}/Tests/Coverage.cobertura.xml -targetdir:"${{ github.workspace }}/Tests/coveragereport" -reporttypes:Html -assemblyfilters:+MinimalApi
-     
-      - name: Generate coverage report
-        run: |
-          dotnet test --logger trx --results-directory ./TestResults
-          ls ./TestResults
-          reportgenerator "-reports:./TestResults/*.trx" "-targetdir:./CoverageReport" "-reporttypes:Html"
-
-      - name: Upload Coverage Report as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: ${{ github.workspace }}/Tests/coveragereport
-          
-      - name: Download and extract coverage report
-        uses: actions/download-artifact@v2
-        with:
-          name: coverage-report
-          run: |
-            mkdir -p coverage-report
-            tar xf ${{ github.workspace }}/*.zip -C coverage-report/
-
+          dotnet test ./PopulationMondiale/PopulationMondiale.Tests --logger "trx;LogFileName=test_results.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator "-reports:./PopulationMondiale/PopulationMondiale.Tests/TestResults/*.trx" "-targetdir:./CoverageReport" "-reporttypes:Html"
+          continue-on-error: true
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp

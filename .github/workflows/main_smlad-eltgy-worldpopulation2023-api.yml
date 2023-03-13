@@ -52,8 +52,22 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
+
+      - name: Install Required Tools
+        run: |
+          dotnet new tool-manifest
+          dotnet tool install dotnet-reportgenerator-globaltool
+          dotnet tool install dotnet-coverage
+
+      - name: Run the unit tests with code coverage
+        run: dotnet coverage collect dotnet test --output ${{ github.workspace }}/Tests/Coverage --output-format cobertura
+
+      - name: Generate Report
+        run: |
+          dotnet reportgenerator -reports:${{ github.workspace }}/Tests/Coverage.cobertura.xml -targetdir:"${{ github.workspace }}/Tests/coveragereport" -reporttypes:Html -assemblyfilters:+MinimalApi
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp

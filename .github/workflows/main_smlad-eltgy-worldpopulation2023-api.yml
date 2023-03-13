@@ -66,13 +66,6 @@ jobs:
       - name: Run the unit tests with code coverage
         run: dotnet coverage collect dotnet test --output ${{ github.workspace }}/Tests/Coverage --output-format cobertura
 
-      - name: Build and test with code coverage
-        run: |
-          dotnet test ./PopulationMondiale/PopulationMondiale.Tests --logger "trx;LogFileName=test_results.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator "-reports:./PopulationMondiale/PopulationMondiale.Tests/TestResults/*.trx" "-targetdir:./CoverageReport" "-reporttypes:Html"
-          continue-on-error: true
-
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
         

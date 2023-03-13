@@ -69,6 +69,12 @@ jobs:
         run: |
           dotnet reportgenerator -reports:${{ github.workspace }}/Tests/Coverage.cobertura.xml -targetdir:"${{ github.workspace }}/Tests/coveragereport" -reporttypes:Html -assemblyfilters:+MinimalApi
 
+      - name: Upload Coverage Report as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: ${{ github.workspace }}/Tests/coveragereport
+
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
         

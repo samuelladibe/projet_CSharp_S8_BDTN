@@ -41,9 +41,9 @@ namespace PopulationMondiale.Controllers
 
             return pays;
         }
-
+    
+        // PUT syntax: api/Pays/{id}
         // PUT: api/Pays/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPays(int id, Pays pays)
         {
@@ -52,7 +52,16 @@ namespace PopulationMondiale.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(pays).State = EntityState.Modified;
+            var existingPays = await _context.Pays.FindAsync(id);
+
+            if (existingPays == null)
+            {
+                return NotFound();
+            }
+
+            existingPays.NomPays = pays.NomPays;
+            existingPays.ContinentId = pays.ContinentId;
+            existingPays.Population_ = pays.Population_;
 
             try
             {

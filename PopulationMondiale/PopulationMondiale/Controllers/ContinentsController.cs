@@ -52,8 +52,16 @@ namespace PopulationMondiale.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(continent).State = EntityState.Modified;
+            var existingContinent = await _context.Continent.FindAsync(id);
 
+            if (existingContinent == null)
+            {
+                return NotFound();
+            }
+            
+            existingContinent.NomContinent = continent.NomContinent;
+            existingContinent.Pays_ = continent.Pays_;
+            
             try
             {
                 await _context.SaveChangesAsync();

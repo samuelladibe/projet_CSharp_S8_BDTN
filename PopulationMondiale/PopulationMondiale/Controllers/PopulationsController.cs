@@ -52,7 +52,16 @@ namespace PopulationMondiale.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(population).State = EntityState.Modified;
+            var existingPopulation = await _context.Population.FindAsync(id);
+
+            if (existingPopulation == null)
+            {
+                return NotFound();
+            }
+
+            existingPopulation.Annee = population.Annee;
+            existingPopulation.Valeur = population.Valeur;
+            existingPopulation.PaysId = population.PaysId;
 
             try
             {

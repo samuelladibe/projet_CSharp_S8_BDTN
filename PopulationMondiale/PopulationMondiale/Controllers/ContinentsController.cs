@@ -120,7 +120,7 @@ namespace PopulationMondiale.Controllers
             }
             var population = continent.Pays_.SelectMany(p => p.Population_).Where(p => p.Annee == year).Sum(p => p.Valeur);
 
-            return Ok($"La population totale pour ce continent est: {population}");
+            return Ok($"La population totale du continent {continentName} pour l'annee {year} est: {population}");
         }
 
         private bool ContinentExists(int id)

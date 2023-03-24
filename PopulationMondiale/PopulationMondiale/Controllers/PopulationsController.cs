@@ -108,28 +108,7 @@ namespace PopulationMondiale.Controllers
 
             return NoContent();
         }
-
-        //Population of a country for a given year: api/populations/{countryName}/{year}
-
-        [HttpGet("{countryName}/{year}")]
-        public ActionResult<Population> GetPopulationData(string countryName, int year)
-        {
-            var country = _context.Pays.SingleOrDefault(c => c.NomPays == countryName);
-            
-            if (country == null)
-            {
-                return NotFound();
-            }
-            
-            var population = _context.Population.SingleOrDefault(p => p.Annee==year);
-
-            if (population == null)
-            {
-                return NotFound();
-            }
-
-            return population;
-        }
+        
         private bool PopulationExists(int id)
         {
             return _context.Population.Any(e => e.Id == id);

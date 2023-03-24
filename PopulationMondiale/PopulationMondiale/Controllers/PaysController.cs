@@ -81,7 +81,28 @@ namespace PopulationMondiale.Controllers
 
             return NoContent();
         }
+        
+        //Population of a country for a given year: api/pays/{countryName}/{year}
+        [HttpGet("{countryName}/{year}")]
+        public ActionResult<Population> GetPopulationData(string countryName, int year)
+        {
+            var country = _context.Pays.SingleOrDefault(c => c.NomPays == countryName);
 
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            var population = _context.Population.SingleOrDefault(p => p.Annee == year && p.PaysId == country.Id);
+
+            if (population == null)
+            {
+                return NotFound();
+            }
+
+            return population;
+        }
+        
         // POST: api/Pays
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

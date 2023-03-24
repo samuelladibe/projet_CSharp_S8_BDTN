@@ -32,7 +32,10 @@ namespace PopulationMondiale.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Continent>> GetContinent(int id)
         {
-            var continent = await _context.Continent.FindAsync(id);
+            var continent = await _context.Continent
+                .Include(c => c.Pays_)
+                .ThenInclude(p => p.Population_)
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             if (continent == null)
             {
@@ -41,6 +44,7 @@ namespace PopulationMondiale.Controllers
 
             return continent;
         }
+
 
         // PUT: api/Continents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

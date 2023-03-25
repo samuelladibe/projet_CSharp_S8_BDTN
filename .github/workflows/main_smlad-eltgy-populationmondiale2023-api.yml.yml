@@ -17,10 +17,10 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy the smlad-eltgy-worldpopulation2023-api ASP.Net Core app to Azure App Services
+name: Build and deploy the smlad-eltgy-populationmondiale2023-api ASP.Net Core app to Azure App Services
 
 env:
-  AZURE_WEBAPP_NAME: smlad-eltgy-worldpopulation2023-api    # set this to the name of your Azure Web App
+  AZURE_WEBAPP_NAME: smlad-eltgy-populationmondiale2023-api    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
@@ -96,7 +96,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'smlad-eltgy-worldpopulation2023-api'
+          app-name: 'smlad-eltgy-populationmondiale2023-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.ASP_DOTNET_CORE_API_PROJ_S8_BDTN_SECRET }}
           package: .

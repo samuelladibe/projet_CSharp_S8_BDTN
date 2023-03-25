@@ -32,7 +32,7 @@ namespace PopulationMondiale.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pays>> GetPays(int id)
         {
-            var pays = await _context.Pays.FindAsync(id);
+            var pays = await _context.Pays.Include(p => p.Population_).FirstOrDefaultAsync(p => p.Id == id);
 
             if (pays == null)
             {
@@ -41,6 +41,7 @@ namespace PopulationMondiale.Controllers
 
             return pays;
         }
+
     
         // PUT syntax: api/Pays/{id}
         // PUT: api/Pays/5

@@ -12,7 +12,7 @@ namespace PopulationMondiale.Models
         [ForeignKey("Continent")]
         [Required]
         public int ContinentId { get; set; }
-        public ICollection<Population>? Population_ { get; set; }
+        public ICollection<Population> Population_ { get; set; }
 
     }
 }

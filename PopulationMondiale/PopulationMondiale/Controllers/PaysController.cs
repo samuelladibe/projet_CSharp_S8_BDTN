@@ -32,7 +32,7 @@ namespace PopulationMondiale.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pays>> GetPays(int id)
         {
-            var pays = await _context.Pays.FindAsync(id);
+            var pays = await _context.Pays.Include(p => p.Population_).FirstOrDefaultAsync(p => p.Id == id);
 
             if (pays == null)
             {
@@ -42,8 +42,9 @@ namespace PopulationMondiale.Controllers
             return pays;
         }
 
+    
+        // PUT syntax: api/Pays/{id}
         // PUT: api/Pays/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPays(int id, Pays pays)
         {
@@ -52,7 +53,16 @@ namespace PopulationMondiale.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(pays).State = EntityState.Modified;
+            var existingPays = await _context.Pays.FindAsync(id);
+
+            if (existingPays == null)
+            {
+                return NotFound();
+            }
+
+            existingPays.NomPays = pays.NomPays;
+            existingPays.ContinentId = pays.ContinentId;
+            existingPays.Population_ = pays.Population_;
 
             try
             {
@@ -72,7 +82,28 @@ namespace PopulationMondiale.Controllers
 
             return NoContent();
         }
+        
+        //Population of a country for a given year: api/pays/{countryName}/{year}
+        [HttpGet("{countryName}/{year}")]
+        public ActionResult<Population> GetPopulationData(string countryName, int year)
+        {
+            var country = _context.Pays.SingleOrDefault(c => c.NomPays == countryName);
 
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            var population = _context.Population.SingleOrDefault(p => p.Annee == year && p.PaysId == country.Id);
+
+            if (population == null)
+            {
+                return NotFound();
+            }
+
+            return population;
+        }
+        
         // POST: api/Pays
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]

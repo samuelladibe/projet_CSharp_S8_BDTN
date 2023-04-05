@@ -32,7 +32,10 @@ namespace PopulationMondiale.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Continent>> GetContinent(int id)
         {
-            var continent = await _context.Continent.FindAsync(id);
+            var continent = await _context.Continent
+                .Include(c => c.Pays_)
+                .ThenInclude(p => p.Population_)
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             if (continent == null)
             {
@@ -41,6 +44,7 @@ namespace PopulationMondiale.Controllers
 
             return continent;
         }
+
 
         // PUT: api/Continents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -52,8 +56,16 @@ namespace PopulationMondiale.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(continent).State = EntityState.Modified;
+            var existingContinent = await _context.Continent.FindAsync(id);
 
+            if (existingContinent == null)
+            {
+                return NotFound();
+            }
+            
+            existingContinent.NomContinent = continent.NomContinent;
+            existingContinent.Pays_ = continent.Pays_;
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -112,7 +124,7 @@ namespace PopulationMondiale.Controllers
             }
             var population = continent.Pays_.SelectMany(p => p.Population_).Where(p => p.Annee == year).Sum(p => p.Valeur);
 
-            return Ok(population);
+            return Ok($"La population totale du continent {continentName} pour l'annee {year} est: {population}");
         }
 
         private bool ContinentExists(int id)
